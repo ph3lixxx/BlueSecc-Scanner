@@ -19,7 +19,7 @@ Sebuah alat pemindai kerentanan web yang mendeteksi XSS, SQL Injection, LFI, dan
 1. **Clone Repository**
 ```bash
 git clone https://github.com/BlueSecc/BlueSecc-Scanner.git
-cd BlueSecc
+cd BlueSecc-Scanner
 
 Install Dependencies
 
