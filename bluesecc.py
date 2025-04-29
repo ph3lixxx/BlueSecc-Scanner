@@ -20,7 +20,7 @@ def show_banner():
 
     print(f"{Fore.BLUE}===========================================")
     print("  VULNERABILITY SCANNER TOOL")
-    print("  By: BlueSecc")
+    print("  By: BlueSecc && Setsuna Jin")
     print("===========================================")
     print("Pilih jenis scan yang ingin dilakukan:")
     print("1. XSS (Cross-Site Scripting)")
