@@ -32,7 +32,12 @@ def show_banner():
 
 
 
+def write_log(text):
+    datename = datetime.now().strftime("%Y-%m-%d")
+    filename = f"vuln_{datename}.txt"
 
+    with open(filename, 'a') as f:
+        f.write(f"{text}")
 
 def get_resume():
     try:
@@ -97,11 +102,14 @@ def test_xss(url, param, payload, verbose):
         data = {param: payload}
         response = requests.get(url, params=data)
         if re.search(payload, response.text, re.IGNORECASE):
+            write_log(f"[xss] {param} {payload}")
+
             print(f"{Fore.GREEN}[XSS] Potensi kerentanan ditemukan di parameter {param} dengan payload: {payload}")
         elif verbose:
             print(f"{Fore.RED}[XSS] Tidak rentan terhadap payload: {payload}")
-    except:
-        pass
+    except KeyboardInterrupt:
+        print(Fore.YELLOW + "\n[-] Script interrupted by user.")
+        exit()
 
 # Fungsi untuk menguji SQL Injection
 def test_sqli(url, param, payload, verbose):
@@ -118,6 +126,8 @@ def test_sqli(url, param, payload, verbose):
         for db, patterns in errors.items():
             for pattern in patterns:
                 if re.search(pattern, response.text):
+                    write_log(f"[sqli] {db} {param} { payload }")
+
                     print(f"{Fore.GREEN}[SQLi] Potensi {db} injection di parameter {param} dengan payload: {payload}")
                     found = True
                     break
@@ -125,8 +135,9 @@ def test_sqli(url, param, payload, verbose):
                 break
         if verbose and not found:
             print(f"{Fore.RED}[SQLi] Tidak rentan terhadap payload: {payload}")
-    except:
-        pass
+    except KeyboardInterrupt:
+        print(Fore.YELLOW + "\n[-] Script interrupted by user.")
+        exit()
 
 # Fungsi untuk menguji LFI
 def test_lfi(url, param, payload, verbose):
@@ -134,11 +145,14 @@ def test_lfi(url, param, payload, verbose):
         data = {param: payload}
         response = requests.get(url, params=data)
         if "root:" in response.text:
+            write_log(f"[lfi] {param} {payload}")
+
             print(f"{Fore.GREEN}[LFI] Potensi Local File Inclusion di parameter {param} dengan payload: {payload}")
         elif verbose:
             print(f"{Fore.RED}[LFI] Tidak rentan terhadap payload: {payload}")
-    except:
-        pass
+    except KeyboardInterrupt:
+        print(Fore.YELLOW + "\n[-] Script interrupted by user.")
+        exit()
 
 # Fungsi untuk menguji Open Redirect
 def test_open_redirect(url, param, payload, verbose):
@@ -148,6 +162,7 @@ def test_open_redirect(url, param, payload, verbose):
         if 300 <= response.status_code < 400:
             location = response.headers.get('Location', '')
             if payload in location:
+                write_log(f"[open_redirect] {param} {payload}")
                 print(f"{Fore.GREEN}[Open Redirect] Potensi kerentanan di parameter {param} dengan payload: {payload}")
         elif verbose:
             print(f"{Fore.RED}[Open Redirect] Tidak rentan terhadap payload: {payload}")
@@ -167,8 +182,9 @@ if __name__ == "__main__":
     choice = input("Pilih jenis scan (1-5): ")
 
     # Opsi verbose
-    verbose_choice = input("Gunakan mode verbose? (y/n): ").strip().lower()
-    verbose = verbose_choice
+    #verbose_choice = input("Gunakan mode verbose? (y/n): ").strip().lower()
+    #verbose = verbose_choice
+    verbose = "y"
 
     # Mapping pilihan ke jenis scan
     scan_options = {
