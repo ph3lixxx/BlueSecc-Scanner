@@ -20,7 +20,7 @@ def show_banner():
 
     print(f"{Fore.BLUE}===========================================")
     print("  VULNERABILITY SCANNER TOOL")
-    print("  By: BlueSecc && Setsuna Jin")
+    print("  By: BlueSecc")
     print("===========================================")
     print("Pilih jenis scan yang ingin dilakukan:")
     print("1. XSS (Cross-Site Scripting)")
@@ -29,6 +29,23 @@ def show_banner():
     print("4. Open Redirect")
     print("5. Scan Semua (XSS, SQLi, LFI, Open Redirect)")
     print("===========================================")
+
+
+
+
+
+def get_resume():
+    try:
+        with open(".blue_resume", 'r') as f:
+            return int(f.read())
+    except:
+        return 0
+
+def set_resume(text):
+    with open(".blue_resume", 'w') as f:
+        f.write(str(text))
+
+
 
 # Fungsi untuk memuat payload dari file
 def load_payloads(payload_type):
@@ -70,7 +87,7 @@ def detect_vulnerabilities(url, scan_type, verbose):
                 redirect_payloads = load_payloads("openredirect")
                 for payload in redirect_payloads:
                     test_open_redirect(url, param, payload, verbose)
-            
+
     except Exception as e:
         print(f"{Fore.RED}[!] Error: {str(e)}")
 
@@ -134,8 +151,11 @@ def test_open_redirect(url, param, payload, verbose):
                 print(f"{Fore.GREEN}[Open Redirect] Potensi kerentanan di parameter {param} dengan payload: {payload}")
         elif verbose:
             print(f"{Fore.RED}[Open Redirect] Tidak rentan terhadap payload: {payload}")
-    except:
-        pass
+
+    except KeyboardInterrupt:
+        print(Fore.YELLOW + "\n[-] Script interrupted by user.")
+        exit()
+
 
 if __name__ == "__main__":
     show_banner()
@@ -148,7 +168,7 @@ if __name__ == "__main__":
 
     # Opsi verbose
     verbose_choice = input("Gunakan mode verbose? (y/n): ").strip().lower()
-    verbose = verbose_choice == "y"
+    verbose = verbose_choice
 
     # Mapping pilihan ke jenis scan
     scan_options = {
@@ -182,11 +202,23 @@ if __name__ == "__main__":
 
     elif scan_mode == "2":  # Multi Target dari file
         file_path = input("Masukkan path file daftar target: ").strip()
+        
         if os.path.exists(file_path):
             with open(file_path, "r") as file:
+        
                 urls = [line.strip() for line in file.readlines()]
-                for url in urls:
+                total = len(urls)
+                start_from = get_resume()
+
+                for idx in range(start_from, total):
+                    url = urls[idx].strip()
+
+                    if idx != 0:
+                        print(f"{Fore.CYAN}[+] Resume URL: {idx}")
                     detect_vulnerabilities(url, scan_options.get(choice, "all"), verbose)
+                    set_resume(idx+1)
+
+
         else:
             print(f"{Fore.RED}[!] File tidak ditemukan.")
 
