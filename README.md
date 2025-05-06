@@ -1,4 +1,4 @@
-# BlueSecc Vulnerability Scanner 🔍
+# Vulnerability Scanner 🔍
 
 Sebuah alat pemindai kerentanan web yang mendeteksi XSS, SQL Injection, LFI, dan Open Redirect.
 
@@ -18,8 +18,8 @@ Sebuah alat pemindai kerentanan web yang mendeteksi XSS, SQL Injection, LFI, dan
 
 1. **Clone Repository**
 ```bash
-git clone https://github.com/BlueSecc/BlueSecc-Scanner.git
-cd BlueSecc-Scanner
+git clone https://github.com/ph3lixxx/f-fx
+cd f-fx
 
 Install Dependencies
 
@@ -64,7 +64,7 @@ Contoh Output 🖥️
 
 ===========================================
   VULNERABILITY SCANNER TOOL
-  By: BlueSecc
+  By: ph3lixxx
 ===========================================
 [*] Memulai scan untuk: http://testphp.vulnweb.com/listproducts.php?cat=1
 [!] Testing parameter: cat
