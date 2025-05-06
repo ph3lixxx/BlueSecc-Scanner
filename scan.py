@@ -12,7 +12,7 @@ init(autoreset=True)
 def show_banner():
     for _ in range(3):  # Loop untuk efek berkedip
         print(f"{Fore.BLUE}\n===========================================")
-        print("               BlueSecc                 ")
+        print("               ph3lixxx                 ")
         print("===========================================")
         time.sleep(0.5)
         os.system("cls" if os.name == "nt" else "clear")  # Membersihkan layar
@@ -20,7 +20,7 @@ def show_banner():
 
     print(f"{Fore.BLUE}===========================================")
     print("  VULNERABILITY SCANNER TOOL")
-    print("  By: BlueSecc")
+    print("  By: ph3lixxx")
     print("===========================================")
     print("Pilih jenis scan yang ingin dilakukan:")
     print("1. XSS (Cross-Site Scripting)")
