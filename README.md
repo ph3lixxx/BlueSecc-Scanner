@@ -18,8 +18,8 @@ Sebuah alat pemindai kerentanan web yang mendeteksi XSS, SQL Injection, LFI, dan
 
 1. **Clone Repository**
 ```bash
-git clone https://github.com/ph3lixxx/f-fx
-cd f-fx
+git clone https://github.com/ph3lixxx/f-hx
+cd f-hx
 
 Install Dependencies
 
